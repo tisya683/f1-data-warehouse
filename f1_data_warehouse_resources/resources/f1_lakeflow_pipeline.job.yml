@@ -1,0 +1,52 @@
+resources:
+  jobs:
+    F1_Data_Lakehouse_Pipeline:
+      name: F1 Data Lakehouse Pipeline
+      schedule:
+        quartz_cron_expression: 56 0 0 26 * ?
+        timezone_id: Asia/Singapore
+        pause_status: UNPAUSED
+      tasks:
+        - task_key: OpenF1_API_Ingestion
+          notebook_task:
+            notebook_path: /Workspace/Users/tisya.elan@gmail.com/f1-data-warehouse/03_incremental_ingestion
+            source: WORKSPACE
+        - task_key: Bronze_OpenF1
+          depends_on:
+            - task_key: OpenF1_API_Ingestion
+          notebook_task:
+            notebook_path: /Workspace/Users/tisya.elan@gmail.com/f1-data-warehouse/05_bronze_openf1
+            source: WORKSPACE
+        - task_key: Silver_OpenF1
+          depends_on:
+            - task_key: Bronze_OpenF1
+          notebook_task:
+            notebook_path: /Workspace/Users/tisya.elan@gmail.com/f1-data-warehouse/06_silver
+            source: WORKSPACE
+        - task_key: Gold_Dimensions
+          depends_on:
+            - task_key: Silver_OpenF1
+          notebook_task:
+            notebook_path: /Workspace/Users/tisya.elan@gmail.com/f1-data-warehouse/08_incremental_dims
+            source: WORKSPACE
+        - task_key: Gold_Facts
+          depends_on:
+            - task_key: Gold_Dimensions
+          notebook_task:
+            notebook_path: /Workspace/Users/tisya.elan@gmail.com/f1-data-warehouse/10_incremental_facts
+            source: WORKSPACE
+        - task_key: Data_Quality_Checks
+          depends_on:
+            - task_key: Gold_Facts
+          notebook_task:
+            notebook_path: /Workspace/Users/tisya.elan@gmail.com/f1-data-warehouse/10_data_quality_checks
+            source: WORKSPACE
+          environment_key: Default
+      queue:
+        enabled: true
+      environments:
+        - environment_key: Default
+          spec:
+            environment_version: "5"
+      performance_target: PERFORMANCE_OPTIMIZED
+
