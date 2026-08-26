@@ -1,0 +1,27 @@
+name: Deploy F1 Data Lakehouse
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Databricks CLI
+        uses: databricks/setup-cli@main
+
+      - name: Validate Bundle
+        working-directory: f1_data_warehouse_resources
+        run: databricks bundle validate --target dev
+
+      - name: Deploy Bundle
+        working-directory: f1_data_warehouse_resources
+        run: databricks bundle deploy --target dev
