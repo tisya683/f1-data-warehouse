@@ -39,7 +39,7 @@ resources:
           depends_on:
             - task_key: Gold_Facts
           notebook_task:
-            notebook_path: /Workspace/Users/tisya.elan@gmail.com/f1-data-warehouse/10_data_quality_checks
+            notebook_path: /Workspace/Users/tisya.elan@gmail.com/f1-data-warehouse/11_data_quality_checks
             source: WORKSPACE
           environment_key: Default
       queue:
