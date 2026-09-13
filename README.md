@@ -26,6 +26,9 @@ The link to this dataset: https://www.kaggle.com/datasets/rohanrao/formula-1-wor
 Whereas for the current data, I used the OpenF1 APIs from: https://openf1.org
 The data from this API returns 2023-current. Since there's an overlap with Ergast for 2023 and 2024, I filtered it to only get data from 2025 onwards.
 
+
+## Overview of Project
+
 **Phase 1: Historical Backfill**
 
 ```mermaid
