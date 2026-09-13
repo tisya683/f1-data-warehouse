@@ -20,10 +20,13 @@ Hence, I thought it would be interesting to merge the historical data from Ergas
 **Historical Data**
 
 Since the Ergast API for F1 data between 1950 and 2024 retired in 2024, I used a Kaggle dataset which contained all the data from Ergast.
+
 The link to this dataset: https://www.kaggle.com/datasets/rohanrao/formula-1-world-championship-1950-2020
 
 **Current Data**
+
 Whereas for the current data, I used the OpenF1 APIs from: https://openf1.org
+
 The data from this API returns 2023-current. Since there's an overlap with Ergast for 2023 and 2024, I filtered it to only get data from 2025 onwards.
 
 
@@ -81,7 +84,7 @@ The process was very iterative, as I would sometimes discover while creating the
 2. **Pipeline Runtime**:
 One limitation of the current process is that the OpenF1 API reloads the data in full, resulting in each Lakeflow Job taking up to approximately 40 minutes to run. This limitation and potential solutions are discussed further in the Future Improvements section.
 
-3.**Lakeflow Jobs**:
+3. **Lakeflow Jobs**:
 Individual notebooks could run successfully in isolation but encountered issues when executed as part of the overall job. This required checking dependencies between notebooks, execution order, permissions, and the configuration of the job itself. I also had to verify that changes deployed through GitHub Actions were correctly reflected when the scheduled Lakeflow Job ran.
 
 
